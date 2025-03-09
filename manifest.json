@@ -1,0 +1,49 @@
+{
+  "manifest_version": 3,
+  "name": "Teams Emoji Uploader",
+  "version": "1.0",
+  "description": "Upload custom emojis to Microsoft Teams",
+  "icons": {
+    "16": "icons/star-struck_cat16.png",
+    "48": "icons/star-struck_cat48.png",
+    "128": "icons/star-struck_cat.png"
+  },
+  "permissions": [
+    "activeTab",
+    "scripting",
+    "storage",
+    "webRequest",
+    "tabs",
+    "browsingData"
+  ],
+  "host_permissions": [
+    "https://teams.microsoft.com/*",
+    "https://teams.microsoft.com/v2/*",
+    "https://as-prod.asyncgw.teams.microsoft.com/*"
+  ],
+  "background": {
+    "service_worker": "dist/background.js"
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self' ; object-src 'self'",
+    "sandbox": "sandbox allow-scripts allow-forms allow-popups allow-modals; script-src 'self' 'unsafe-inline' 'unsafe-eval'; child-src 'self';"
+  },
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://teams.microsoft.com/*",
+        "https://teams.microsoft.com/v2/*"
+      ],
+      "js": ["dist/popup.js"]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["dist/popup.js"],
+      "matches": ["https://*.microsoft.com/*"]
+    }
+  ]
+}

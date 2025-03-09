@@ -1,0 +1,163 @@
+<!doctype html>
+<html>
+  <head>
+    <link
+      href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.0.0/css/all.css"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        width: 320px;
+        padding: 16px;
+        margin: 0;
+        font-family: "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif;
+        background: #292929;
+        color: #fff;
+      }
+
+      .button-container {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      #fileInput {
+        display: none;
+      }
+
+      .file-upload-label {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 16px;
+        background: #424242;
+        border: 1px solid #605e5c;
+        border-radius: 4px;
+        color: #fff;
+        cursor: pointer;
+        font-size: 14px;
+        transition: all 0.2s ease;
+      }
+
+      .file-upload-label:hover {
+        background: #484848;
+        border-color: #757575;
+      }
+
+      .selected-files {
+        font-size: 12px;
+        color: #c8c8c8;
+        margin-top: -8px;
+        margin-left: 16px;
+      }
+
+      button {
+        display: flex;
+        gap: 8px;
+        padding: 8px 16px;
+        border: none;
+        border-radius: 4px;
+        font-size: 14px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        font-family: inherit;
+      }
+
+      #processButton {
+        background: #6264a7;
+        color: #fff;
+      }
+
+      #processButton:hover {
+        background: #7174b4;
+      }
+
+      #testButton {
+        background: #484848;
+        color: #fff;
+      }
+
+      #testButton:hover {
+        background: #535353;
+      }
+
+      #status {
+        margin-top: 16px;
+        padding: 12px;
+        min-height: 20px;
+        font-size: 13px;
+        color: #c8c8c8;
+        border-radius: 4px;
+        background: #404040;
+        display: flex;
+        align-items: flex-start;
+        gap: 8px;
+        max-height: 200px;
+        overflow-y: auto;
+        word-break: break-word;
+        white-space: pre-wrap;
+      }
+
+      .status-success {
+        color: #92c353;
+        background: #2d3b21;
+      }
+
+      .status-error {
+        color: #f25c5c;
+        background: #3b2121;
+      }
+
+      .status-ready {
+        color: #70b5f9;
+        background: #212d3b;
+      }
+
+      .status-processing {
+        color: #f9d770;
+        background: #3b3521;
+      }
+
+      #status i {
+        font-size: 14px;
+      }
+
+      .divider {
+        height: 1px;
+        background: #484848;
+        margin: 12px 0;
+      }
+
+      .icon {
+        font-size: 16px;
+        display: flex;
+        align-items: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="button-container">
+      <label class="file-upload-label" for="fileInput">
+        <i class="icon fas fa-paperclip"></i>
+        Choose Emoji Files
+      </label>
+      <input type="file" id="fileInput" multiple accept="image/*" />
+      <div class="selected-files" id="selectedFiles">No files selected</div>
+
+      <div class="divider"></div>
+
+      <button id="processButton">
+        <i class="icon fas fa-upload"></i>
+        Upload to Teams
+      </button>
+    </div>
+
+    <div id="status">
+      <i class="fas fa-circle-info"></i>
+      <span id="statusText">Ready to process</span>
+    </div>
+
+    <script src="dist/popup.js"></script>
+  </body>
+</html>
