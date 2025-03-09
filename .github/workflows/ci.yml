@@ -43,4 +43,6 @@ jobs:
         with:
           name: extension-build
           path: |
-            chrome-extension.zip
+            dist/
+            icons/
+            manifest.json
