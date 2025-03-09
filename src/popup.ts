@@ -120,6 +120,9 @@ async function handleFileProcessing() {
           appcache: true
         },
       );
+
+      await chrome.storage.local.clear();
+
       const tabs = await chrome.tabs.query({
         active: true,
         currentWindow: true,
