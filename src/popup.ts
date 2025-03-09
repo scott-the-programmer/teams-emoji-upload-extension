@@ -117,7 +117,7 @@ async function handleFileProcessing() {
           serviceWorkers: true,
           indexedDB: true,
           cache: true,
-          appcache: true
+          appcache: true,
         },
       );
 

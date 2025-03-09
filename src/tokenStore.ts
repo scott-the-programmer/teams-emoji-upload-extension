@@ -3,7 +3,6 @@ class TokenStore {
   ic3: string | null = null;
   permissionsId: string | null = null;
 
-  // Get tokens from Chrome's storage API
   static async collectTokensFromStorage(): Promise<TokenStore> {
     const tokens = new TokenStore();
 
@@ -36,8 +35,6 @@ class TokenStore {
     return tokens;
   }
 
-  // Fallback method to try collecting from localStorage
-  // Note: This will only work in certain contexts, not in content scripts
   static collectTokensFromLocalStorage(): TokenStore {
     const tokens = new TokenStore();
 
@@ -72,7 +69,6 @@ class TokenStore {
     return tokens;
   }
 
-  // Method to capture Teams tokens from the page and save them to Chrome storage
   static captureAndStoreTokens(): void {
     try {
       const tokens = TokenStore.collectTokensFromLocalStorage();
