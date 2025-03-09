@@ -1,7 +1,10 @@
 {
   "scripts": {
     "build": "webpack --mode production",
-    "test": "jest"
+    "test": "jest",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "zip": "npm run build && zip -r chrome-extension.zip dist/* icons/* manifest.json"
   },
   "devDependencies": {
     "@babel/core": "^7.22.5",
