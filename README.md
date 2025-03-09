@@ -23,11 +23,13 @@
 
 1. Clone this repository
 2. Install dependencies and build:
-   ```console
-   npm install
-   npm run build
-   npm test
-   ```
+
+```console
+npm install
+npm run build
+npm test
+```
+
 3. Open Chrome and navigate to `chrome://extensions`
 4. Enable "Developer Mode" in the top right
 5. Click "Load Unpacked" and select this repository folder
@@ -39,11 +41,13 @@
 ## 🛠️ Development
 
 ### Formatting Code
+
 ```console
 npx prettier . --write
 ```
 
 ### Running Tests
+
 ```console
 npm test
 ```
