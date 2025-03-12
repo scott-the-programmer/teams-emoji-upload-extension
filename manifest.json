@@ -8,12 +8,7 @@
     "48": "icons/star-struck_cat48.png",
     "128": "icons/star-struck_cat.png"
   },
-  "permissions": [
-    "activeTab",
-    "scripting",
-    "storage",
-    "browsingData"
-  ],
+  "permissions": ["activeTab", "scripting", "storage", "browsingData"],
   "host_permissions": [
     "https://teams.microsoft.com/*",
     "https://teams.microsoft.com/v2/*",
