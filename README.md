@@ -17,7 +17,7 @@
 
 ### From Chrome Web Store
 
-⏳ Coming soon! Extension is pending approval.
+Download [Teams Emoji Uploader](https://chromewebstore.google.com/detail/teams-emoji-uploader/mlajagdepghhbclefnmcdnjfhfdmoofo) from the Chrome Web Store
 
 ### From Source
 
