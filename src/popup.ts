@@ -182,6 +182,46 @@ document
   .getElementById("processButton")
   ?.addEventListener("click", () => handleFileProcessing());
 
+async function refreshTeams() {
+  try {
+    updateStatus("Refreshing Teams...", "processing");
+    
+    await chrome.browsingData.remove(
+      {
+        origins: ["https://teams.microsoft.com"],
+      },
+      {
+        cacheStorage: true,
+        cookies: true,
+        localStorage: true,
+        serviceWorkers: true,
+        indexedDB: true,
+        cache: true,
+        appcache: true,
+      }
+    );
+
+    await chrome.storage.local.clear();
+
+    const tabs = await chrome.tabs.query({
+      active: true,
+      currentWindow: true,
+    });
+    const tab = tabs[0];
+
+    if (tab.id) {
+      await chrome.tabs.reload(tab.id);
+      updateStatus("Teams refreshed successfully!", "success");
+    }
+  } catch (error) {
+    updateStatus(`Refresh failed: ${error}`, "error");
+  }
+}
+
+document
+  .getElementById("resetButton")
+  ?.addEventListener("click", refreshTeams);
+
 chrome.runtime.onMessage.addListener(
   (message: { type: string; error: any; status: any; success: any }) => {
     if (message.type === "processUpdate") {

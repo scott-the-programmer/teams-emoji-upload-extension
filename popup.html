@@ -134,6 +134,29 @@
         display: flex;
         align-items: center;
       }
+
+      .subtle-button {
+        background: transparent;
+        color: #c8c8c8;
+        border: none;
+        font-size: 12px;
+        cursor: pointer;
+        padding: 10px;
+        margin-top: 16px;
+        text-align: center;
+        width: 100%;
+        opacity: 0.8;
+        transition: opacity 0.2s;
+      }
+
+      .subtle-button:hover {
+        opacity: 1;
+      }
+
+      .subtle-button i {
+        font-size: 11px;
+        margin-right: 4px;
+      }
     </style>
   </head>
   <body>
@@ -157,6 +180,11 @@
       <i class="fas fa-circle-info"></i>
       <span id="statusText">Ready to process</span>
     </div>
+
+    <button id="resetButton" class="subtle-button">
+      <i class="icon fas fa-sync-alt"></i>
+      Can't see your new emojis? Try refreshing Teams
+    </button>
 
     <script src="dist/popup.js"></script>
   </body>
