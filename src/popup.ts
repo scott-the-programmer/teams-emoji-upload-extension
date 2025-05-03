@@ -7,11 +7,15 @@ document.addEventListener("DOMContentLoaded", async () => {
     const state = await chrome.storage.local.get("processingState");
     if (state.processingState) {
       updateStatus(
-        state.processingState.status, 
-        state.processingState.type as "ready" | "success" | "error" | "processing"
+        state.processingState.status,
+        state.processingState.type as
+          | "ready"
+          | "success"
+          | "error"
+          | "processing",
       );
     }
-    
+
     const tabs = await chrome.tabs.query({ active: true, currentWindow: true });
     const tab = tabs[0];
 
@@ -185,7 +189,7 @@ document
 async function refreshTeams() {
   try {
     updateStatus("Refreshing Teams...", "processing");
-    
+
     await chrome.browsingData.remove(
       {
         origins: ["https://teams.microsoft.com"],
@@ -198,7 +202,7 @@ async function refreshTeams() {
         indexedDB: true,
         cache: true,
         appcache: true,
-      }
+      },
     );
 
     await chrome.storage.local.clear();
@@ -218,27 +222,29 @@ async function refreshTeams() {
   }
 }
 
-document
-  .getElementById("resetButton")
-  ?.addEventListener("click", refreshTeams);
+document.getElementById("resetButton")?.addEventListener("click", refreshTeams);
 
 chrome.runtime.onMessage.addListener(
   (message: { type: string; error: any; status: any; success: any }) => {
     if (message.type === "processUpdate") {
       const status = message.error || message.status;
-      const type = message.success ? "success" : (message.error ? "error" : "processing");
-      
+      const type = message.success
+        ? "success"
+        : message.error
+          ? "error"
+          : "processing";
+
       // Update the UI
       updateStatus(status, type as "success" | "error" | "processing");
-      
+
       // Ensure we store the state in case it was sent directly from background.ts
       // Background should be storing the state, but this is a good fallback
-      chrome.storage.local.set({ 
-        processingState: { 
-          status: status, 
-          type: type 
-        } 
+      chrome.storage.local.set({
+        processingState: {
+          status: status,
+          type: type,
+        },
       });
     }
-  }
+  },
 );

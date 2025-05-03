@@ -5,13 +5,17 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (message.action === "processFiles") {
     const files = JSON.parse(message.files) as FileDetails[];
     // Set initial processing state
-    chrome.storage.local.set({ processingState: { status: "Processing...", type: "processing" } });
+    chrome.storage.local.set({
+      processingState: { status: "Processing...", type: "processing" },
+    });
     handleFileProcessing(files, message.tokens)
       .then(sendResponse)
       .catch((error) => {
         const errorMessage = formatErrorMessage(error);
         // Store error state
-        chrome.storage.local.set({ processingState: { status: errorMessage, type: "error" } });
+        chrome.storage.local.set({
+          processingState: { status: errorMessage, type: "error" },
+        });
         sendResponse({ success: false, error: errorMessage });
       });
     return true;
@@ -59,7 +63,9 @@ export async function handleFileProcessing(
   try {
     if (!tokens.chatsvcagg || !tokens.ic3 || !tokens.permissionsId) {
       const errorMsg = "Could not find required tokens";
-      chrome.storage.local.set({ processingState: { status: errorMsg, type: "error" } });
+      chrome.storage.local.set({
+        processingState: { status: errorMsg, type: "error" },
+      });
       throw new Error(errorMsg);
     }
     const teams = new MsTeamsClient(
@@ -70,11 +76,11 @@ export async function handleFileProcessing(
     const result = await teams.uploadFiles(files);
 
     // Store processing result state
-    chrome.storage.local.set({ 
-      processingState: { 
-        status: result.status || "", 
-        type: result.success ? "success" : "error"
-      } 
+    chrome.storage.local.set({
+      processingState: {
+        status: result.status || "",
+        type: result.success ? "success" : "error",
+      },
     });
 
     chrome.runtime.sendMessage({
@@ -90,7 +96,9 @@ export async function handleFileProcessing(
     const errorResult = { success: false, error: errorMessage };
 
     // Store error state
-    chrome.storage.local.set({ processingState: { status: errorMessage, type: "error" } });
+    chrome.storage.local.set({
+      processingState: { status: errorMessage, type: "error" },
+    });
 
     chrome.runtime.sendMessage({
       type: "processUpdate",

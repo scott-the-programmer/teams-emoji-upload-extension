@@ -123,9 +123,10 @@ describe("Background Script", () => {
       // Verify storage state was saved correctly
       expect(chrome.storage.local.set).toHaveBeenCalledWith({
         processingState: {
-          status: "Your emojis have been uploaded - please allow 20 minutes for Teams to sync",
-          type: "success"
-        }
+          status:
+            "Your emojis have been uploaded - please allow 20 minutes for Teams to sync",
+          type: "success",
+        },
       });
     });
 
@@ -163,8 +164,8 @@ describe("Background Script", () => {
       expect(chrome.storage.local.set).toHaveBeenCalledWith({
         processingState: {
           status: "Could not find required tokens",
-          type: "error"
-        }
+          type: "error",
+        },
       });
     });
 
@@ -211,8 +212,8 @@ describe("Background Script", () => {
       expect(chrome.storage.local.set).toHaveBeenCalledWith({
         processingState: {
           status: "Upload failed",
-          type: "error"
-        }
+          type: "error",
+        },
       });
     });
 
@@ -220,7 +221,7 @@ describe("Background Script", () => {
     it("should set initial processing state on file processing", async () => {
       // Reset the mocks
       jest.clearAllMocks();
-      
+
       // Create test data
       const mockFiles: FileDetails[] = [
         {
@@ -230,26 +231,26 @@ describe("Background Script", () => {
           base64: "dGVzdA==", // test in base64
         },
       ];
-      
+
       const mockTokens = {
         chatsvcagg: "chat-token",
         ic3: "ic3-token",
         permissionsId: "permissions-id",
       };
-      
+
       // Setup a mock for uploadFiles
       const mockUploadFiles = jest.fn().mockResolvedValue({
         success: true,
-        status: "Test status"
+        status: "Test status",
       });
-      
+
       MsTeamsClient.mockImplementation(() => ({
         uploadFiles: mockUploadFiles,
       }));
-      
+
       // Call handleFileProcessing
       await handleFileProcessing(mockFiles, mockTokens);
-      
+
       // Check if chrome.storage.local.set was called with the initial state
       // This verifies our state storage logic works properly
       expect(chrome.storage.local.set).toHaveBeenCalledWith(
@@ -258,7 +259,7 @@ describe("Background Script", () => {
             status: expect.any(String),
             type: expect.any(String),
           }),
-        })
+        }),
       );
     });
   });
