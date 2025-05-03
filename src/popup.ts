@@ -3,6 +3,15 @@ import { ProcessResult, FileDetails } from "./types";
 
 document.addEventListener("DOMContentLoaded", async () => {
   try {
+    // Check for existing processing state
+    const state = await chrome.storage.local.get("processingState");
+    if (state.processingState) {
+      updateStatus(
+        state.processingState.status, 
+        state.processingState.type as "ready" | "success" | "error" | "processing"
+      );
+    }
+    
     const tabs = await chrome.tabs.query({ active: true, currentWindow: true });
     const tab = tabs[0];
 
@@ -176,10 +185,20 @@ document
 chrome.runtime.onMessage.addListener(
   (message: { type: string; error: any; status: any; success: any }) => {
     if (message.type === "processUpdate") {
-      updateStatus(
-        message.error || message.status,
-        message.success ? "success" : "error",
-      );
+      const status = message.error || message.status;
+      const type = message.success ? "success" : (message.error ? "error" : "processing");
+      
+      // Update the UI
+      updateStatus(status, type as "success" | "error" | "processing");
+      
+      // Ensure we store the state in case it was sent directly from background.ts
+      // Background should be storing the state, but this is a good fallback
+      chrome.storage.local.set({ 
+        processingState: { 
+          status: status, 
+          type: type 
+        } 
+      });
     }
-  },
+  }
 );

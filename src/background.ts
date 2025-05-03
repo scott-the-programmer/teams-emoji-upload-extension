@@ -4,10 +4,14 @@ import { ProcessResult, FileDetails } from "./types";
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (message.action === "processFiles") {
     const files = JSON.parse(message.files) as FileDetails[];
+    // Set initial processing state
+    chrome.storage.local.set({ processingState: { status: "Processing...", type: "processing" } });
     handleFileProcessing(files, message.tokens)
       .then(sendResponse)
       .catch((error) => {
         const errorMessage = formatErrorMessage(error);
+        // Store error state
+        chrome.storage.local.set({ processingState: { status: errorMessage, type: "error" } });
         sendResponse({ success: false, error: errorMessage });
       });
     return true;
@@ -54,7 +58,9 @@ export async function handleFileProcessing(
 ): Promise<ProcessResult> {
   try {
     if (!tokens.chatsvcagg || !tokens.ic3 || !tokens.permissionsId) {
-      throw new Error("Could not find required tokens");
+      const errorMsg = "Could not find required tokens";
+      chrome.storage.local.set({ processingState: { status: errorMsg, type: "error" } });
+      throw new Error(errorMsg);
     }
     const teams = new MsTeamsClient(
       tokens.ic3,
@@ -62,6 +68,14 @@ export async function handleFileProcessing(
       tokens.permissionsId,
     );
     const result = await teams.uploadFiles(files);
+
+    // Store processing result state
+    chrome.storage.local.set({ 
+      processingState: { 
+        status: result.status || "", 
+        type: result.success ? "success" : "error"
+      } 
+    });
 
     chrome.runtime.sendMessage({
       type: "processUpdate",
@@ -74,6 +88,9 @@ export async function handleFileProcessing(
   } catch (error) {
     const errorMessage = formatErrorMessage(error);
     const errorResult = { success: false, error: errorMessage };
+
+    // Store error state
+    chrome.storage.local.set({ processingState: { status: errorMessage, type: "error" } });
 
     chrome.runtime.sendMessage({
       type: "processUpdate",
