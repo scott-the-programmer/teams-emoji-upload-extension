@@ -43,7 +43,7 @@ npm test
 ### Formatting Code
 
 ```console
-npx prettier . --write
+npm run format
 ```
 
 ### Running Tests
