@@ -7,7 +7,7 @@
     "zip": "npm run build && zip -r chrome-extension.zip popup.html dist/* icons/* manifest.json"
   },
   "devDependencies": {
-    "@babel/core": "^7.22.5",
+    "@babel/core": "^7.29.0",
     "@babel/preset-env": "^7.22.5",
     "@types/chrome": "^0.0.306",
     "@types/jest": "^29.5.5",
