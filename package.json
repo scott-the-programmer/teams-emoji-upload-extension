@@ -9,7 +9,7 @@
   "devDependencies": {
     "@babel/core": "^7.22.5",
     "@babel/preset-env": "^7.22.5",
-    "@types/chrome": "^0.0.306",
+    "@types/chrome": "^0.1.37",
     "@types/jest": "^29.5.5",
     "@types/node": "^20.10.5",
     "babel-loader": "^9.1.2",
