@@ -4,7 +4,9 @@ import { ProcessResult, FileDetails } from "./types";
 document.addEventListener("DOMContentLoaded", async () => {
   try {
     // Check for existing processing state
-    const state = await chrome.storage.local.get("processingState");
+    const state = await chrome.storage.local.get<{
+      processingState?: { status: string; type: string };
+    }>("processingState");
     if (state.processingState) {
       updateStatus(
         state.processingState.status,
