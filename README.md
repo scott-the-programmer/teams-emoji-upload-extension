@@ -1,6 +1,8 @@
 # 🎨 Teams Emoji Upload Extension
 
-> Effortlessly bulk upload custom emojis to your Microsoft Teams organization with just a few clicks!
+> **Archived:** I no longer have access to a Microsoft Teams workspace to test this extension, so I can no longer maintain it or verify that it works. Feel free to fork the repository, fix issues, and continue development in your own fork.
+
+Bulk upload custom emojis to your Microsoft Teams organization.
 
 ![Screenshot](./readme/screenshot.png)
 
@@ -54,7 +56,7 @@ npm test
 
 ## 🤝 Contributing
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+This repository is archived and is no longer accepting issues or pull requests. Forks and continued development are welcome!
 
 ## 📄 License
 
